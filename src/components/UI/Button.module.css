@@ -1,0 +1,18 @@
+.button {
+   background-color: var(--primary);
+   color: var(--white);
+   padding: 5px 20px;
+   border: none;
+   border-radius: 15px;
+   transition: transform 0.05s;
+   text-transform: uppercase;
+   cursor: pointer;
+}
+
+.button:hover {
+   transform: translate(2px, -2px);
+}
+
+.button:active {
+   transform: translate(2px, -2px) scale(1.05);
+}
