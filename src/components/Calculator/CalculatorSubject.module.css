@@ -17,6 +17,12 @@
    justify-content: center;
    align-items: center;
    text-align: center;
+   transition: 0.2s color;
+   cursor: pointer;
+}
+
+.subject__name:hover {
+   color: var(--warning);
 }
 
 .subject__final {
@@ -33,51 +39,22 @@
 }
 
 .subject__types-header {
+   width: 100%;
+   display: flex;
    font-size: 0.8em;
    font-weight: 700;
 }
 
-:is(.subject__types-header, .subject__types-type) {
-   width: 100%;
-   display: flex;
-}
-
-:is(.subject__types-header, .subject__types-type) > div {
+.subject__types-header > div {
    text-align: center;
    width: 30%;
    padding: 0 5px;
 }
 
-:is(.subject__types-header, .subject__types-type) > div:first-child {
+.subject__types-header > div:first-child {
    text-align: right;
    width: 40%;
    padding-right: 5px;
-}
-
-.subject__types-type input {
-   border: 1px solid var(--black-25);
-   border-radius: 15px;
-   color: var(--white);
-   background-color: var(--black-75);
-   width: 100%;
-   height: 100%;
-   text-align: center;
-   overflow: hidden;
-}
-
-.subject__types-type input:focus {
-   outline: 0;
-   border-color: var(--primary);
-}
-
-.subject__types-type input::-webkit-outer-spin-button,
-.subject__types-type input::-webkit-inner-spin-button {
-   -webkit-appearance: none;
-   margin: 0;
-}
-
-.subject__types-type input[type='number'] {
-   -moz-appearance: textfield;
 }
 
 .subject__final-min {

@@ -1,19 +1,23 @@
 import React from 'react';
 
 import styles from './Calculator.module.css';
+import CalculatorProvider from '../store/CalculatorProvider';
+import CalculatorCalculations from './Calculator/CalculatorCalculations';
 import CalculatorForm from './Calculator/CalculatorForm';
+import CalculatorContext from '../store/calculator-context';
 
 import Header from './Layout/Header';
 import Card from './UI/Card';
 
 const Calculator = () => {
    return (
-      <React.Fragment>
+      <CalculatorProvider>
          <Header />
-         <Card>
+         <Card className={styles.interface}>
             <CalculatorForm />
+            <CalculatorCalculations />
          </Card>
-      </React.Fragment>
+      </CalculatorProvider>
    );
 };
 

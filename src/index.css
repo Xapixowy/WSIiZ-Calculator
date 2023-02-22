@@ -5,11 +5,14 @@
    --secondary: #ff814d;
    --tertiary: #4bde3f;
    --black-100: #222222;
+   --black-100-o: #222222af;
+   --black-85: #434343;
    --black-75: #595959;
    --black-50: #909090;
    --black-25: #c8c8c8;
    --black-10: #e9e9e9;
    --white: #fff;
+   --warning: #ff7b7b;
 }
 
 * {
