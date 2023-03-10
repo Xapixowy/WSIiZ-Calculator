@@ -10,6 +10,8 @@ const Summary = () => {
 
    const { subjects, gpa, scholarship } = ctx;
 
+   console.log(scholarship);
+
    return (
       <section className={styles.summary}>
          <div className={styles.data}>
@@ -21,9 +23,9 @@ const Summary = () => {
                Subjects: <span className={styles.secondary}>{subjects.length}</span>
             </div>
             <div>
-               GPA: <span className={styles.primary}>{gpa.worstCase}</span> |{' '}
-               <span className={styles.secondary}>{gpa.currentCase}</span> |{' '}
-               <span className={styles.tertiary}>{gpa.bestCase}</span>
+               GPA: <span className={styles.primary}>{gpa.worstCase.toFixed(2)}</span> |{' '}
+               <span className={styles.secondary}>{gpa.currentCase.toFixed(2)}</span> |{' '}
+               <span className={styles.tertiary}>{gpa.bestCase.toFixed(2)}</span>
             </div>
             <div className={!scholarship.available && styles.unavailable}>
                Scholarship points: <span className={styles.primary}>{scholarship.worstCase}</span> |{' '}

@@ -22,7 +22,14 @@ const Calculations = () => {
    };
 
    const subjects = ctx.subjects.map((subject) => (
-      <Subject key={subject.id} id={subject.id} name={subject.name} gpa={subject.gpa} types={subject.types} />
+      <Subject
+         key={subject.id}
+         id={subject.id}
+         name={subject.name}
+         gpa={subject.gpa}
+         types={subject.types}
+         ctxHandler={ctx.dispatch}
+      />
    ));
 
    return (

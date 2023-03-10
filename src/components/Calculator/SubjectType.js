@@ -14,8 +14,13 @@ const roundGrade = (grade) => {
 };
 
 const SubjectType = (props) => {
-   const { id, name, grades } = props;
+   const { id, subjectId, name, grades, ctxHandler } = props;
 
+   const [firstTerm, setFirstTerm] = useState(grades.firstTerm);
+   const [secondTerm, setSecondTerm] = useState(grades.secondTerm);
+   const [conditionalRetake, setConditionalRetake] = useState(grades.conditionalRetake);
+   const [creditInAdvance, setCreditInAdvance] = useState(grades.creditInAdvance);
+   const [comission, setComission] = useState(grades.comission);
    const [isDisabled, setIsDisabled] = useState({
       secondTerm: true,
       conditionalRetake: true,
@@ -24,34 +29,44 @@ const SubjectType = (props) => {
    });
 
    useEffect(() => {
-      if (grades.firstTerm < 2) {
+      if (firstTerm < 2) {
          setIsDisabled({
             secondTerm: true,
             conditionalRetake: true,
             creditInAdvance: true,
             comission: true,
          });
-      } else if (grades.secondTerm < 2) {
+         setSecondTerm(1);
+         setConditionalRetake(1);
+         setCreditInAdvance(1);
+         setComission(1);
+      } else if (secondTerm < 2) {
          setIsDisabled({
             secondTerm: false,
             conditionalRetake: true,
             creditInAdvance: true,
             comission: true,
          });
-      } else if (grades.conditionalRetake < 2) {
+         setConditionalRetake(1);
+         setCreditInAdvance(1);
+         setComission(1);
+      } else if (conditionalRetake < 2) {
          setIsDisabled({
             secondTerm: false,
             conditionalRetake: false,
             creditInAdvance: true,
             comission: true,
          });
-      } else if (grades.creditInAdvance < 2) {
+         setCreditInAdvance(1);
+         setComission(1);
+      } else if (creditInAdvance < 2) {
          setIsDisabled({
             secondTerm: false,
             conditionalRetake: false,
             creditInAdvance: false,
             comission: true,
          });
+         setComission(1);
       } else {
          setIsDisabled({
             secondTerm: false,
@@ -60,75 +75,118 @@ const SubjectType = (props) => {
             comission: false,
          });
       }
-   }, [grades]);
+      const timeoutIndex = setTimeout(() => {
+         setFirstTerm(roundGrade(firstTerm));
+         setSecondTerm(roundGrade(secondTerm));
+         setConditionalRetake(roundGrade(conditionalRetake));
+         setCreditInAdvance(roundGrade(creditInAdvance));
+         setComission(roundGrade(comission));
+         ctxHandler({
+            type: 'UPDATE_TYPE',
+            subjectId,
+            typeId: id,
+            grades: { firstTerm, secondTerm, conditionalRetake, creditInAdvance, comission },
+         });
+      }, 500);
+      return () => {
+         clearTimeout(timeoutIndex);
+      };
+   }, [firstTerm, secondTerm, conditionalRetake, creditInAdvance, comission, subjectId, id]);
+
+   const firstTermHandler = (e) => {
+      setFirstTerm(parseFloat(e.target.value));
+   };
+
+   const secondTermHandler = (e) => {
+      setSecondTerm(parseFloat(e.target.value));
+   };
+
+   const conditionalRetakeHandler = (e) => {
+      setConditionalRetake(parseFloat(e.target.value));
+   };
+
+   const creditInAdvanceHandler = (e) => {
+      setCreditInAdvance(parseFloat(e.target.value));
+   };
+
+   const comissionHandler = (e) => {
+      setComission(parseFloat(e.target.value));
+   };
+
+   const typeDeleteHandler = () => {
+      props.ctxHandler({ type: 'REMOVE_TYPE', subjectId, typeId: id });
+   };
 
    return (
       <Fragment>
-         <p className={styles['type__name']}>{name}</p>
+         <p className={styles['type__name']} onClick={typeDeleteHandler}>
+            {name}
+         </p>
          <div className={styles['type__grade']}>
             <input
-               className={`${styles['type__input']} ${grades.firstTerm < 2 && styles.disabled}`}
+               className={`${styles['type__input']} ${firstTerm < 2 && styles.disabled}`}
                name={`${id}-firstTerm`}
                type="number"
                min="1"
                max="5"
                step="0.5"
-               value={grades.firstTerm}
+               value={firstTerm}
+               onChange={firstTermHandler}
             />
          </div>
          <div className={styles['type__grade']}>
             <input
-               className={`${styles['type__input']} ${
-                  grades.secondTerm < 2 && !isDisabled.secondTerm && styles.disabled
-               }`}
+               className={`${styles['type__input']} ${secondTerm < 2 && !isDisabled.secondTerm && styles.disabled}`}
                name={`${id}-secondTerm`}
                type="number"
                min="1"
                max="5"
                step="0.5"
-               value={grades.secondTerm}
+               value={secondTerm}
+               onChange={secondTermHandler}
                disabled={isDisabled.secondTerm}
             />
          </div>
          <div className={styles['type__grade']}>
             <input
                className={`${styles['type__input']} ${
-                  grades.conditionalRetake < 2 && !isDisabled.conditionalRetake && styles.disabled
+                  conditionalRetake < 2 && !isDisabled.conditionalRetake && styles.disabled
                }`}
                name={`${id}-conditionalRetake`}
                type="number"
                min="1"
                max="5"
                step="0.5"
-               value={grades.conditionalRetake}
+               value={conditionalRetake}
+               onChange={conditionalRetakeHandler}
                disabled={isDisabled.conditionalRetake}
             />
          </div>
          <div className={styles['type__grade']}>
             <input
                className={`${styles['type__input']} ${
-                  grades.creditInAdvance < 2 && !isDisabled.creditInAdvance && styles.disabled
+                  creditInAdvance < 2 && !isDisabled.creditInAdvance && styles.disabled
                }`}
                name={`${id}-creditInAdvance`}
                type="number"
                min="1"
                max="5"
                step="0.5"
-               value={grades.creditInAdvance}
+               value={creditInAdvance}
+               onChange={creditInAdvanceHandler}
                disabled={isDisabled.creditInAdvance}
             />
          </div>
          <div className={styles['type__grade']}>
             <input
-               className={`${styles['type__input']} ${
-                  grades.comission < 2 && !isDisabled.comission && styles.disabled
-               }`}
+               className={`${styles['type__input']} ${comission < 2 && !isDisabled.comission && styles.disabled}`}
                name={`${id}-comission`}
                type="number"
                min="1"
                max="5"
                step="0.5"
-               value={grades.comission}
+               value={comission}
+               onChange={comissionHandler}
                disabled={isDisabled.comission}
             />
          </div>

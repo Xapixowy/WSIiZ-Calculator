@@ -22,9 +22,10 @@ const Backdrop = (props) => {
 };
 
 const Prompt = (props) => {
+   const { subjectId } = props;
+
    const ctx = useContext(CalculatorContext);
 
-   const [subjectName, setSubjectName] = useState('');
    const [typeName, setTypeName] = useState('');
    const [firstTerm, setFirstTerm] = useState(1);
    const [secondTerm, setSecondTerm] = useState(1);
@@ -98,10 +99,6 @@ const Prompt = (props) => {
       };
    }, [firstTerm, secondTerm, conditionalRetake, creditInAdvance, comission]);
 
-   const subjectNameHandler = (e) => {
-      setSubjectName(e.target.value);
-   };
-
    const typeNameHandler = (e) => {
       setTypeName(e.target.value);
    };
@@ -128,42 +125,24 @@ const Prompt = (props) => {
 
    const submitHandler = (e) => {
       e.preventDefault();
-      const subject = {
-         name: subjectName,
-         types: [
-            {
-               id: Date.now(),
-               name: typeName,
-               grades: {
-                  firstTerm,
-                  secondTerm,
-                  conditionalRetake,
-                  creditInAdvance,
-                  comission,
-               },
-            },
-         ],
+      const typeToAdd = {
+         name: typeName,
+         grades: {
+            firstTerm,
+            secondTerm,
+            conditionalRetake,
+            creditInAdvance,
+            comission,
+         },
       };
-      ctx.dispatch({ type: 'ADD_SUBJECT', subject });
+      ctx.dispatch({ type: 'ADD_TYPE', subjectId, typeToAdd });
       props.onClose();
    };
 
    return (
       <div className={styles.prompt}>
-         <header>Add new subject</header>
+         <header>Add new type</header>
          <form onSubmit={submitHandler}>
-            <label htmlFor={styles['subject__name']}>Subject name:</label>
-            <input
-               id={styles['subject__name']}
-               name="subjectName"
-               type="text"
-               value={subjectName}
-               onChange={subjectNameHandler}
-               placeholder="Object-Oriented Programming"
-               minLength={3}
-               maxLength={50}
-               required
-            />
             <label htmlFor={styles['type__name']}>Type name:</label>
             <input
                id={styles['type__name']}
@@ -266,7 +245,10 @@ const NewSubject = (props) => {
    return (
       <Fragment>
          {createPortal(<Backdrop onClose={props.onClose} />, document.getElementById('prompt'))}
-         {createPortal(<Prompt onClose={props.onClose} />, document.getElementById('prompt'))}
+         {createPortal(
+            <Prompt onClose={props.onClose} subjectId={props.subjectId} />,
+            document.getElementById('prompt'),
+         )}
       </Fragment>
    );
 };

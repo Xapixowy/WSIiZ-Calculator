@@ -1,6 +1,7 @@
 import { createContext } from 'react';
 
 const CalculatorContext = createContext({
+   lastUpdate: 0,
    subjects: [],
    gpa: {
       worstCase: 0,

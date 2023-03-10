@@ -68,6 +68,10 @@
    color: var(--primary);
 }
 
+.unavailable {
+   text-decoration: line-through;
+}
+
 .primary {
    color: var(--primary);
 }
