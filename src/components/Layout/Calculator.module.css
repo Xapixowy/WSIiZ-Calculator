@@ -1,0 +1,6 @@
+.calculator {
+   height: max(600px, 70vh);
+   border-radius: 15px;
+   overflow: hidden;
+   display: flex;
+}

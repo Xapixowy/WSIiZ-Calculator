@@ -1,0 +1,122 @@
+.backdrop {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100vh;
+   background-color: var(--black-100);
+   opacity: 0.5;
+   cursor: pointer;
+}
+
+.prompt {
+   position: fixed;
+   top: 50%;
+   left: 50%;
+   padding: 25px;
+   transform: translate(-50%, -50%);
+   background-color: var(--black-75);
+   color: var(--white);
+   border-radius: 15px;
+   overflow: hidden;
+}
+
+.prompt header {
+   font-size: 1.5em;
+   font-weight: bold;
+   text-transform: uppercase;
+   text-align: center;
+   margin-bottom: 10px;
+}
+
+.prompt form {
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+}
+
+.types {
+   display: grid;
+   gap: 10px 15px;
+   grid-template-columns: repeat(5, max-content);
+   grid-auto-rows: 1fr;
+}
+
+.types h3,
+label {
+   font-size: 1em;
+   font-weight: bold;
+   display: flex;
+   align-items: flex-end;
+   margin: 0;
+   color: var(--white);
+}
+
+#subject__name,
+#type__name {
+   font-size: 1em;
+   height: 100%;
+   background-color: var(--black-75);
+   border: 1px solid var(--black-50);
+   color: var(--white);
+   border-radius: 10px;
+   padding: 0.3em 1em;
+}
+
+.type__grade {
+   width: 100%;
+   height: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.type__input {
+   font-size: 1em;
+   width: 75px;
+   height: 100%;
+   background-color: var(--black-75);
+   border: 1px solid var(--black-50);
+   color: var(--white);
+   text-align: center;
+   border-radius: 10px;
+}
+
+.type__input.disabled {
+   text-decoration-line: line-through;
+   text-decoration-color: var(--primary);
+}
+
+.type__input:disabled {
+   border-color: var(--black-75);
+   background-color: var(--black-85);
+   color: var(--black-50);
+}
+
+.type__input::-webkit-outer-spin-button,
+.type__input::-webkit-inner-spin-button {
+   -webkit-appearance: none;
+   appearance: none;
+   margin: 0;
+}
+
+.type__input[type='number'] {
+   -moz-appearance: textfield;
+}
+
+:is(.type__input, #subject__name, #type__name):focus {
+   outline: 1px solid var(--primary);
+   border-color: var(--primary);
+}
+
+.controls {
+   border-top: 1px solid var(--white);
+   padding-top: 15px;
+   display: flex;
+   justify-content: center;
+   gap: 15px;
+}
+
+.controls > button:nth-of-type(1) {
+   background-color: var(--secondary);
+}

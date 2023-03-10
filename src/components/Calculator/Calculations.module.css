@@ -1,0 +1,20 @@
+.calculations {
+   min-width: 600px;
+   height: 100%;
+   display: flex;
+   flex-direction: column;
+   padding: 25px;
+   background-color: var(--black-100);
+   color: var(--white);
+   overflow-y: auto;
+}
+
+.controls {
+   display: flex;
+   justify-content: center;
+   padding-top: 25px;
+}
+
+.button {
+   font-size: 1em;
+}

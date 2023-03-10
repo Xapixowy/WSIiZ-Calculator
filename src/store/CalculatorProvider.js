@@ -1,108 +1,93 @@
-import React from 'react';
-
+import React, { useReducer } from 'react';
 import CalculatorContext from './calculator-context';
 
-const defaultCalculatorState = {
-   subjects: [],
-   subjectsCount: 0,
-   addSubject: () => {},
-   removeSubject: () => {},
-   editSubject: () => {},
-   gpa: {
-      min: 0,
-      current: 0,
-      max: 0,
-   },
-   scholarship: {
-      min: 0,
-      current: 0,
-      max: 0,
-   },
-   secondTerms: 0,
+const roundGrade = (grade) => {
+   if (grade < 1.75) return 1;
+   else if (grade >= 1.75 && grade < 2.25) return 2;
+   else if (grade >= 2.25 && grade < 2.75) return 2.5;
+   else if (grade >= 2.75 && grade < 3.25) return 3;
+   else if (grade >= 3.25 && grade < 3.75) return 3.5;
+   else if (grade >= 3.75 && grade < 4.25) return 4;
+   else if (grade >= 4.25 && grade < 4.75) return 4.5;
+   else return 5;
 };
 
-const calculatorReducer = (state, action) => {
+const calculateGpa = (types) => {
+   const gpa = {
+      worstCase: 0,
+      currentCase: 0,
+      bestCase: 0,
+   };
+   let numberOfGrades = 0;
+   for (const type in types) {
+      const { firstTerm, secondTerm, conditionalRetake, creditInAdvance, comission } = type.grades;
+      let worstCase = 0;
+      let currentCase = 0;
+      let bestCase = 0;
+   }
+   return gpa;
+};
+
+const calculationsReducer = (state, action) => {
+   console.log(action);
    if (action.type === 'ADD_SUBJECT') {
+      const newState = { ...state };
       const newSubject = {
          ...action.subject,
          id: Date.now(),
       };
-      const subjects = [newSubject, ...state.subjects];
-      const subjectsCount = ++state.subjectsCount;
-      let secondTerms = state.secondTerms;
-      action.subject.types.forEach((type) => {
-         type.term1 < 3 && secondTerms++;
-      });
-      const newState = {
-         ...state,
-         subjects,
-         subjectsCount,
-         secondTerms,
-      };
+      newState.subjects.push(newSubject);
       return newState;
    } else if (action.type === 'REMOVE_SUBJECT') {
-      console.log(action);
-      const subjectIndex = state.subjects.findIndex((subject) => subject.id === action.id);
-      if (subjectIndex >= 0) {
-         const deletedSubject = state.subjects[subjectIndex];
-         const subjects = state.subjects.filter((subject) => subject.id !== action.id);
-         const subjectsCount = --state.subjectsCount;
-         let secondTerms = state.secondTerms;
-         deletedSubject.types.forEach((type) => {
-            type.term1 < 3 && secondTerms--;
-         });
-         const newState = {
-            ...state,
-            subjects,
-            subjectsCount,
-            secondTerms,
-         };
-         return newState;
-      } else return state;
-   } else if (action.type === 'EDIT_SUBJECT') {
-      const subjectIndex = state.subjects.findIndex((subject) => subject.id === action.id);
-      if (subjectIndex >= 0) {
-         const editedSubject = state.subjects[subjectIndex];
-         const newSubject = action.subject;
-         const subjects = state.subjects.splice(subjectIndex, 1, action.subject);
-         const secondTerms = state.secondTerms;
-         const newState = {
-            ...state,
-            subjects,
-            secondTerms,
-         };
-         return newState;
-      } else return state;
+      const newState = { ...state };
+      const newSubjects = newState.subjects.filter((subject) => subject.id !== action.id);
+      newState.subjects = [...newSubjects];
+      return newState;
+   } else if (action.type === 'ADD_TYPE') {
+      const newState = { ...state };
+      const subjectIndex = newState.subjects.findIndex((subject) => subject.id === action.subjectId);
+      const newTypes = [...newState.subjects[subjectIndex]];
+      const newType = {
+         ...action.type,
+         id: Date.now(),
+      };
+      newTypes.push(newType);
+      newState.subjects[subjectIndex].types = [...newTypes];
+      return newState;
+   } else if (action.type === 'REMOVE_TYPE') {
+      const newState = { ...state };
+      const subjectIndex = newState.subjects.findIndex((subject) => subject.id === action.subjectId);
+      const newTypes = newState.subjects[subjectIndex].types.filter((type) => type.id !== action.typeId);
+      newState.subjects[subjectIndex].types = [...newTypes];
+      return newState;
    } else return state;
 };
 
+const calculationsDefault = {
+   subjects: [],
+   gpa: {
+      worstCase: 0,
+      currentCase: 0,
+      bestCase: 0,
+   },
+   scholarship: {
+      worstCase: 0,
+      currentCase: 0,
+      bestCase: 0,
+      available: true,
+   },
+   dispatch: () => {},
+};
+
 const CalculatorProvider = (props) => {
-   const [calculator, dispatchCalculator] = React.useReducer(calculatorReducer, defaultCalculatorState);
+   const [calculations, calculationsDispatch] = useReducer(calculationsReducer, calculationsDefault);
 
-   const addSubjectHandler = (subject) => {
-      dispatchCalculator({ type: 'ADD_SUBJECT', subject: subject });
+   const calculationsProvided = {
+      ...calculations,
+      dispatch: calculationsDispatch,
    };
 
-   const removeSubjectHandler = (subjectId) => {
-      dispatchCalculator({ type: 'REMOVE_SUBJECT', id: subjectId });
-   };
-
-   const editSubjectHandler = (subject) => {
-      dispatchCalculator({ type: 'EDIT_SUBJECT', subject: subject });
-   };
-
-   const calculatorContext = {
-      subjects: calculator.subjects,
-      subjectsCount: calculator.subjectsCount,
-      addSubject: addSubjectHandler,
-      removeSubject: removeSubjectHandler,
-      editSubject: editSubjectHandler,
-      gpa: calculator.gpa,
-      scholarship: calculator.scholarship,
-      secondTerms: calculator.secondTerms,
-   };
-
-   return <CalculatorContext.Provider value={calculatorContext}>{props.children}</CalculatorContext.Provider>;
+   return <CalculatorContext.Provider value={calculationsProvided}>{props.children}</CalculatorContext.Provider>;
 };
 
 export default CalculatorProvider;

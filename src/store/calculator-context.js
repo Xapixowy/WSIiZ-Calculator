@@ -1,22 +1,19 @@
-import React from 'react';
+import { createContext } from 'react';
 
-const CalculatorContext = React.createContext({
+const CalculatorContext = createContext({
    subjects: [],
-   subjectsCount: 0,
-   addSubject: () => {},
-   removeSubject: () => {},
-   editSubject: () => {},
    gpa: {
-      min: 0,
-      current: 0,
-      max: 0,
+      worstCase: 0,
+      currentCase: 0,
+      bestCase: 0,
    },
    scholarship: {
-      min: 0,
-      current: 0,
-      max: 0,
+      worstCase: 0,
+      currentCase: 0,
+      bestCase: 0,
+      available: true,
    },
-   secondTerms: 0,
+   dispatch: () => {},
 });
 
 export default CalculatorContext;

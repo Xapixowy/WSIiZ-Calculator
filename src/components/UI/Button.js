@@ -5,11 +5,11 @@ import styles from './Button.module.css';
 const Button = (props) => {
    return (
       <button
+         onClick={props.onClick ? props.onClick : undefined}
          type={props.type ? props.type : 'button'}
-         className={`${props.className ? props.className : ''} ${styles.button}`}
-         onClick={props.onClick}
+         className={`${styles.button} ${props.className ? props.className : ''}`}
       >
-         {props.text}
+         {props.children}
       </button>
    );
 };

@@ -1,0 +1,56 @@
+.subject {
+   display: flex;
+   flex-direction: column;
+   gap: 20px;
+   border-bottom: 1px solid var(--white);
+   padding-bottom: 10px;
+}
+
+.subject__name {
+   font-size: 1.75em;
+   margin: 0;
+   cursor: pointer;
+   transition: color 0.2s;
+}
+
+.subject__name:hover {
+   color: var(--primary);
+}
+
+.types {
+   display: grid;
+   gap: 10px 15px;
+   grid-template-columns: repeat(6, max-content);
+   grid-auto-rows: 1fr;
+}
+
+.types h3 {
+   font-size: 1em;
+   display: flex;
+   align-items: flex-end;
+   margin: 0 0 10px 0;
+   color: var(--black-50);
+}
+
+.types .controls {
+   grid-column: 1 / 7;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.subject__final {
+   margin: 0;
+}
+
+.primary {
+   color: var(--primary);
+}
+
+.secondary {
+   color: var(--secondary);
+}
+
+.tertiary {
+   color: var(--tertiary);
+}

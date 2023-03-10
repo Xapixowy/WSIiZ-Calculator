@@ -1,17 +1,7 @@
 .header {
    display: flex;
    align-items: center;
-   color: var(--black-100);
-}
-
-.header__icon {
-   stroke: var(--black-100);
-   stroke-width: 2px;
-   margin-right: 2em;
-   transform: scale(2.5);
-}
-
-.header__text {
-   font-weight: 900;
+   gap: 10px;
+   font-weight: bold;
    text-transform: uppercase;
 }
