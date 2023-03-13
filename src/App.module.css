@@ -1,8 +1,15 @@
 .app {
    width: 100%;
    min-height: 100vh;
+   padding: 10px;
    display: flex;
    flex-direction: column;
-   justify-content: center;
+   justify-content: flex-start;
    align-items: center;
+}
+
+@media screen and (min-width: 850px) and (orientation: landscape) {
+   .app {
+      justify-content: center;
+   }
 }

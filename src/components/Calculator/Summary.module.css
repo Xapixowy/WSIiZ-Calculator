@@ -1,6 +1,12 @@
 .summary {
-   height: 100%;
-   padding: 25px;
+   position: fixed;
+   bottom: 0;
+   left: 0;
+   width: calc(100% - 20px);
+   height: calc(100% - 20px);
+   padding: 5px 25px 25px 25px;
+   border-radius: 15px;
+   margin: 10px;
    display: flex;
    flex-direction: column;
    justify-content: space-between;
@@ -8,6 +14,13 @@
    background-color: var(--black-75);
    color: var(--white);
    font-size: 16px;
+   transition: transform 0.2s;
+   transform: translateY(calc(100% - 34px));
+   /* transform: translateY(0); */
+}
+
+.summary.shown {
+   transform: translateY(0);
 }
 
 :is(.data, .legend) {
@@ -24,9 +37,11 @@
 }
 
 .header {
+   height: 40px;
    justify-content: center;
    border-bottom: 1px solid var(--white);
    padding-bottom: 5px;
+   cursor: pointer;
 }
 
 .header h2 {
@@ -82,4 +97,22 @@
 
 .tertiary {
    color: var(--tertiary);
+}
+
+@media screen and (min-width: 850px) and (orientation: landscape) {
+   .summary {
+      position: relative;
+      width: auto;
+      height: 100%;
+      padding: 25px;
+      transform: translateY(0);
+      cursor: auto;
+      border-radius: 0;
+      margin: 0;
+      transition: none;
+   }
+
+   .header {
+      cursor: auto;
+   }
 }

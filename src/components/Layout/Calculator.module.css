@@ -1,6 +1,16 @@
 .calculator {
-   height: max(600px, 70vh);
+   width: 100%;
+   flex-grow: 1;
    border-radius: 15px;
    overflow: hidden;
    display: flex;
+   margin-bottom: 40px;
+}
+
+@media screen and (min-width: 850px) and (orientation: landscape) {
+   .calculator {
+      width: auto;
+      height: max(600px, 70vh);
+      margin-bottom: 0;
+   }
 }

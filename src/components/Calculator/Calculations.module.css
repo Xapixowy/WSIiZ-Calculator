@@ -1,6 +1,6 @@
 .calculations {
-   min-width: 600px;
-   height: 100%;
+   width: 100%;
+   flex-grow: 1;
    display: flex;
    flex-direction: column;
    gap: 20px;
@@ -18,4 +18,13 @@
 
 .button {
    font-size: 1em;
+}
+
+@media screen and (min-width: 850px) and (orientation: landscape) {
+   .calculations {
+      width: auto;
+      flex-grow: 0;
+      min-width: 675px;
+      height: 100%;
+   }
 }

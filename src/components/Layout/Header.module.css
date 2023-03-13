@@ -4,4 +4,11 @@
    gap: 10px;
    font-weight: bold;
    text-transform: uppercase;
+   font-size: 0.85em;
+}
+
+@media screen and (min-width: 850px) and (orientation: landscape) {
+   .header {
+      font-size: 1em;
+   }
 }
