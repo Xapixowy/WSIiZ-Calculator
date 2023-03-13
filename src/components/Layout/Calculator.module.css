@@ -10,6 +10,7 @@
 @media screen and (min-width: 850px) and (orientation: landscape) {
    .calculator {
       width: auto;
+      flex-grow: 0;
       height: max(600px, 70vh);
       margin-bottom: 0;
    }
